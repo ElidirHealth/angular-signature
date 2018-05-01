@@ -5,8 +5,8 @@
 
 angular.module('signature', []);
 
-angular.module('signature').directive('signaturePad', ['$interval', '$timeout', '$window',
-  function ($interval, $timeout, $window) {
+angular.module('signature').directive('signaturePad', ['$timeout', '$window',
+  function ($timeout, $window) {
     'use strict';
 
     var signaturePad, element, EMPTY_IMAGE = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAjgAAADcCAQAAADXNhPAAAACIklEQVR42u3UIQEAAAzDsM+/6UsYG0okFDQHMBIJAMMBDAfAcADDATAcwHAAwwEwHMBwAAwHMBzAcAAMBzAcAMMBDAcwHADDAQwHwHAAwwEMB8BwAMMBMBzAcADDATAcwHAADAcwHADDAQwHMBwAwwEMB8BwAMMBDAfAcADDATAcwHAAwwEwHMBwAAwHMBzAcAAMBzAcAMMBDAcwHADDAQwHwHAAwwEwHMBwAMMBMBzAcAAMBzAcwHAADAcwHADDAQwHMBwAwwEMB8BwAMMBDAfAcADDATAcwHAAwwEwHMBwAAwHMBzAcCQADAcwHADDAQwHwHAAwwEMB8BwAMMBMBzAcADDATAcwHAADAcwHMBwAAwHMBwAwwEMBzAcAMMBDAfAcADDAQwHwHAAwwEwHMBwAAwHMBzAcAAMBzAcAMMBDAcwHADDAQwHwHAAwwEMB8BwAMMBMBzAcADDATAcwHAADAcwHMBwAAwHMBwAwwEMB8BwAMMBDAfAcADDATAcwHAAwwEwHMBwAAwHMBzAcAAMBzAcAMMBDAcwHADDAQwHwHAAwwEMB8BwAMMBMBzAcADDkQAwHMBwAAwHMBwAwwEMBzAcAMMBDAfAcADDAQwHwHAAwwEwHMBwAMMBMBzAcAAMBzAcwHAADAcwHADDAQwHMBwAwwEMB8BwAMMBMBzAcADDATAcwHAADAcwHMBwAAwHMBwAwwEMBzAcAMMBDAegeayZAN3dLgwnAAAAAElFTkSuQmCC';
@@ -118,12 +118,6 @@ angular.module('signature').directive('signaturePad', ['$interval', '$timeout', 
           ctx.setTransform(1, 0, 0, 1, 0, 0);
           ctx.scale(1 / scale, 1 / scale);
         };
-
-        var resizeIH = $interval(calculateScale, 200);
-        scope.$on('$destroy', function () {
-          $interval.cancel(resizeIH);
-          resizeIH = null;
-        });
 
         angular.element($window).bind('resize', calculateScale);
         scope.$on('$destroy', function () {
